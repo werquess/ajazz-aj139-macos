@@ -17,6 +17,16 @@ enum S: CaseIterable {
     case searching, notFound, bluetooth, bluetoothShort, bluetoothDetail, readFailed, writeFailed, verifyFailed, saved
     case settings, language, systemLanguage, batteryRefresh, seconds, support, supportText
     case buyCoffee, about, version, source, done
+    case tabMouse, tabButtons, tabScroll
+    case accessTitle, accessDetail, accessButton
+    case buttons, buttonsHint, middleButton, backButton, forwardButton
+    case actionSystem, actionDisabled, recordShortcut, pressKeys, recordTitle, recordHint
+    case groupNavigation, groupSystem, groupEdit, groupMedia
+    case macros, noMacros, newMacro, editMacro, macroName, steps, stepsCount, noSteps
+    case addKeys, addText, addDelay, textPlaceholder, ms, cancel, save, delete
+    case scroll, smooth, smoothHint, reverse, reverseHint, speed, precise, preciseHint, scrollFooter
+    case general, showMenuBar, menuBarPercent, showDock, launchAtLogin, backgroundHint
+    case openApp, quit, activeStage
 }
 
 struct Strings {
@@ -39,6 +49,61 @@ struct Strings {
         case .saved: return self[.saved]
         }
     }
+
+    func button(_ b: MouseButton) -> String {
+        switch b {
+        case .middle: return self[.middleButton]
+        case .back: return self[.backButton]
+        case .forward: return self[.forwardButton]
+        }
+    }
+
+    func group(_ g: Preset.Group) -> String {
+        switch g {
+        case .navigation: return self[.groupNavigation]
+        case .system: return self[.groupSystem]
+        case .edit: return self[.groupEdit]
+        case .media: return self[.groupMedia]
+        }
+    }
+
+    func preset(_ p: Preset) -> String {
+        let t = Strings.presets[p]!
+        return lang.resolved == .tr ? t.1 : t.0
+    }
+
+    func action(_ a: ButtonAction, macros: [Macro]) -> String {
+        switch a {
+        case .system: return self[.actionSystem]
+        case .disabled: return self[.actionDisabled]
+        case .preset(let p): return preset(p)
+        case .shortcut(let c): return c.display
+        case .macro(let id): return macros.first { $0.id == id }?.name ?? self[.actionSystem]
+        }
+    }
+
+    private static let presets: [Preset: (String, String)] = [
+        .back: ("Back", "Geri"),
+        .forward: ("Forward", "İleri"),
+        .nextTab: ("Next tab", "Sonraki sekme"),
+        .previousTab: ("Previous tab", "Önceki sekme"),
+        .middleClick: ("Middle click", "Orta tık"),
+        .missionControl: ("Mission Control", "Mission Control"),
+        .appExpose: ("App windows", "Uygulama pencereleri"),
+        .showDesktop: ("Show desktop", "Masaüstünü göster"),
+        .spotlight: ("Spotlight", "Spotlight"),
+        .screenshot: ("Screenshot", "Ekran görüntüsü"),
+        .copy: ("Copy", "Kopyala"),
+        .paste: ("Paste", "Yapıştır"),
+        .undo: ("Undo", "Geri al"),
+        .redo: ("Redo", "Yinele"),
+        .playPause: ("Play / Pause", "Oynat / Duraklat"),
+        .nextTrack: ("Next track", "Sonraki parça"),
+        .previousTrack: ("Previous track", "Önceki parça"),
+        .volumeUp: ("Volume up", "Sesi aç"),
+        .volumeDown: ("Volume down", "Sesi kıs"),
+        .mute: ("Mute", "Sessiz"),
+    ]
 
     private static let table: [S: (String, String)] = [
         .connected: ("Connected", "Bağlı"),
@@ -75,5 +140,68 @@ struct Strings {
         .version: ("Version", "Sürüm"),
         .source: ("Source code", "Kaynak kod"),
         .done: ("Done", "Tamam"),
+        .tabMouse: ("Mouse", "Mouse"),
+        .tabButtons: ("Buttons & Macros", "Tuşlar ve Makrolar"),
+        .tabScroll: ("Scrolling", "Kaydırma"),
+        .accessTitle: ("Accessibility permission needed", "Erişilebilirlik izni gerekli"),
+        .accessDetail: ("Button actions, macros and scrolling need Accessibility access. Turn on AJ139 Driver in System Settings › Privacy & Security › Accessibility. After an update you may need to turn it off and on again.",
+                        "Tuş atamaları, makrolar ve kaydırma için Erişilebilirlik izni gerekir. Sistem Ayarları › Gizlilik ve Güvenlik › Erişilebilirlik bölümünde AJ139 Driver'ı aç. Güncellemeden sonra izni kapatıp yeniden açman gerekebilir."),
+        .accessButton: ("Open System Settings", "Sistem Ayarları'nı aç"),
+        .buttons: ("Buttons", "Tuşlar"),
+        .buttonsHint: ("Works over USB, 2.4 GHz and Bluetooth. Left and right buttons are never changed.",
+                       "USB, 2.4 GHz ve Bluetooth'ta çalışır. Sol ve sağ tuş hiçbir zaman değiştirilmez."),
+        .middleButton: ("Middle button", "Orta tuş"),
+        .backButton: ("Back side button", "Geri yan tuşu"),
+        .forwardButton: ("Forward side button", "İleri yan tuşu"),
+        .actionSystem: ("Default", "Varsayılan"),
+        .actionDisabled: ("Disabled", "Devre dışı"),
+        .recordShortcut: ("Keyboard shortcut…", "Klavye kısayolu…"),
+        .pressKeys: ("Press keys…", "Tuşlara bas…"),
+        .recordTitle: ("Keyboard shortcut", "Klavye kısayolu"),
+        .recordHint: ("Click the field and press the key combination. Esc cancels.",
+                      "Alana tıkla ve tuş kombinasyonuna bas. Esc iptal eder."),
+        .groupNavigation: ("Navigation", "Gezinme"),
+        .groupSystem: ("System", "Sistem"),
+        .groupEdit: ("Edit", "Düzenle"),
+        .groupMedia: ("Media", "Medya"),
+        .macros: ("Macros", "Makrolar"),
+        .noMacros: ("No macros yet. A macro plays shortcuts, text and pauses in order.",
+                    "Henüz makro yok. Makro; kısayolları, metni ve beklemeleri sırayla çalıştırır."),
+        .newMacro: ("New macro", "Yeni makro"),
+        .editMacro: ("Macro", "Makro"),
+        .macroName: ("Name", "Ad"),
+        .steps: ("Steps", "Adımlar"),
+        .stepsCount: ("steps", "adım"),
+        .noSteps: ("Add a step below.", "Aşağıdan bir adım ekle."),
+        .addKeys: ("Shortcut", "Kısayol"),
+        .addText: ("Text", "Metin"),
+        .addDelay: ("Pause", "Bekleme"),
+        .textPlaceholder: ("Text to type", "Yazılacak metin"),
+        .ms: ("ms", "ms"),
+        .cancel: ("Cancel", "İptal"),
+        .save: ("Save", "Kaydet"),
+        .delete: ("Delete", "Sil"),
+        .scroll: ("Scrolling", "Kaydırma"),
+        .smooth: ("Smooth scrolling", "Yumuşak kaydırma"),
+        .smoothHint: ("Turns each wheel step into a smooth, accelerated scroll.",
+                      "Her tekerlek adımını yumuşak ve hızlanan bir kaydırmaya çevirir."),
+        .reverse: ("Reverse scroll direction", "Kaydırma yönünü ters çevir"),
+        .reverseHint: ("Only the mouse wheel is reversed. The trackpad keeps its own direction.",
+                       "Yalnızca mouse tekerleği ters döner. Trackpad kendi yönünde kalır."),
+        .speed: ("Speed", "Hız"),
+        .precise: ("Precise scrolling with ⌥", "⌥ ile hassas kaydırma"),
+        .preciseHint: ("Hold Option while scrolling to move slowly.", "Yavaş kaydırmak için kaydırırken Option tuşunu basılı tut."),
+        .scrollFooter: ("Applies to mouse wheels only. Trackpads and Magic Mouse are not affected.",
+                        "Yalnızca mouse tekerleklerini etkiler. Trackpad ve Magic Mouse etkilenmez."),
+        .general: ("General", "Genel"),
+        .showMenuBar: ("Show in menu bar", "Menü çubuğunda göster"),
+        .menuBarPercent: ("Battery percentage in menu bar", "Menü çubuğunda pil yüzdesi"),
+        .showDock: ("Show Dock icon", "Dock simgesini göster"),
+        .launchAtLogin: ("Open at login", "Oturum açılınca başlat"),
+        .backgroundHint: ("Closing the window keeps the app running in the background, so buttons and scrolling keep working.",
+                          "Pencereyi kapatınca uygulama arka planda çalışmaya devam eder, tuşlar ve kaydırma çalışmayı sürdürür."),
+        .openApp: ("Open AJ139 Driver", "AJ139 Driver'ı aç"),
+        .quit: ("Quit", "Çık"),
+        .activeStage: ("DPI stage", "DPI aşaması"),
     ]
 }

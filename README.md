@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>A free, open-source macOS app for the AJAZZ AJ139 V2 MC mouse.</strong><br>
-  Battery level and DPI settings on your Mac, without booting Windows.
+  Battery level, DPI, button macros and smooth scrolling on your Mac, without booting Windows.
 </p>
 
 <p align="center">
@@ -52,6 +52,25 @@ AJ139 Driver talks to the mouse directly over its own HID protocol, which was wo
 - The DPI button on the mouse cycles through the stages you set.
 - One click to go back to the default stages.
 
+### 🖱️ Buttons and macros
+- Assign the middle button and both side buttons to Back, Forward, tab switching, Mission Control, Show Desktop, Spotlight, copy and paste, media keys and more.
+- Record any keyboard shortcut for a button.
+- Build macros from shortcuts, typed text and pauses and put them on a button.
+- Works over USB, the 2.4 GHz receiver and Bluetooth. Left and right buttons are never touched.
+
+### 🌀 Scrolling
+- Smooth, accelerated scrolling for the mouse wheel.
+- Reverse the wheel direction without changing the trackpad.
+- Adjustable scroll speed and precise scrolling while holding Option.
+- Trackpads and Magic Mouse are not affected.
+
+### 📌 Menu bar
+- Battery level in the menu bar.
+- Switch DPI stages and toggle scrolling features from the menu.
+- Keeps running in the background when the window is closed. The Dock icon is optional and it can open at login.
+
+Buttons, macros and scrolling need Accessibility access. The app shows a button that opens the right page in System Settings. After updating the app you may need to turn the permission off and on again.
+
 ### 🌍 Languages
 - English and Türkçe, or follow the system language.
 
@@ -78,9 +97,9 @@ Prefer a plain archive? Use **[AJ139-Driver.zip](https://github.com/werquess/aja
 | --- | --- | --- |
 | AJAZZ AJ139 V2 MC | USB cable | Tested |
 | AJAZZ AJ139 V2 MC | 2.4 GHz receiver | Should work, not tested yet |
-| AJAZZ AJ139 V2 MC | Bluetooth | Detected, but battery and DPI are not available |
+| AJAZZ AJ139 V2 MC | Bluetooth | Buttons, macros and scrolling work. Battery and DPI are not available |
 
-Over Bluetooth the mouse only exposes the standard mouse and keyboard reports. It does not share its battery level or settings, not even with macOS itself. The app recognizes a Bluetooth connection and tells you to plug in the cable or receiver to change DPI.
+Over Bluetooth the mouse only exposes the standard mouse and keyboard reports. It does not share its battery level or settings, not even with macOS itself. DPI stages you set over the cable are stored on the mouse and stay active over Bluetooth.
 
 The mouse accepts DPI indicator colors but does not store them, so there is no color setting.
 
@@ -91,8 +110,9 @@ AJ139 Driver has no analytics, no telemetry and makes no network connections. It
 ## Roadmap
 
 - [ ] Polling rate setting
-- [ ] Button remapping
-- [ ] Menu bar mode with battery level
+- [x] Button remapping and macros
+- [x] Menu bar mode with battery level
+- [x] Smooth and reversed scrolling
 - [ ] Support for other AJAZZ mice that use the same chip
 
 Have an idea or another AJAZZ mouse you want supported? [Open an issue](https://github.com/werquess/ajazz-aj139-macos/issues).

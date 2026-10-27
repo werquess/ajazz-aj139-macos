@@ -6,6 +6,8 @@ enum Status {
 
 @MainActor
 final class MouseModel: ObservableObject {
+    static let shared = MouseModel()
+
     @Published var connected = false
     @Published var battery: Battery?
     @Published var stages = Proto.defaultStages
