@@ -1,59 +1,135 @@
 <p align="center">
-  <img src="docs/logo.png" width="128" alt="AJ139 Driver icon">
+  <img src="docs/logo.png" width="160" height="160" alt="AJ139 Driver icon">
 </p>
 
 <h1 align="center">AJ139 Driver</h1>
 
 <p align="center">
-  A small native macOS app for the AJAZZ AJ139 V2 MC mouse.<br>
-  The official software is Windows only, so I wrote this one.
+  <strong>A free, open-source macOS app for the AJAZZ AJ139 V2 MC mouse.</strong><br>
+  Battery level and DPI settings on your Mac, without booting Windows.
 </p>
 
 <p align="center">
-  <img src="docs/demo.gif" width="460" alt="Demo">
+  <a href="https://github.com/werquess/ajazz-aj139-macos/releases/latest/download/AJ139-Driver.dmg"><img src="https://img.shields.io/badge/Download-AJ139--Driver.dmg-8a5cff?style=for-the-badge&logo=apple&logoColor=white" alt="Download DMG"></a>
+  <a href="https://github.com/werquess/ajazz-aj139-macos/releases/latest/download/AJ139-Driver.zip"><img src="https://img.shields.io/badge/Download-AJ139--Driver.zip-3fa9ff?style=for-the-badge&logo=apple&logoColor=white" alt="Download ZIP"></a>
+  <a href="https://buymeacoffee.com/werquess"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-support-ffdd00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy me a coffee"></a>
 </p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/macOS-14%2B-black?style=flat-square&logo=apple" alt="macOS 14+">
+  <img src="https://img.shields.io/badge/Apple%20Silicon-native-black?style=flat-square" alt="Apple Silicon">
+  <img src="https://img.shields.io/github/v/release/werquess/ajazz-aj139-macos?style=flat-square&color=8a5cff" alt="Latest release">
+  <img src="https://img.shields.io/github/license/werquess/ajazz-aj139-macos?style=flat-square&color=3fa9ff" alt="MIT License">
+</p>
+
+<p align="center">
+  <img src="docs/demo.gif" alt="AJ139 Driver demo" width="460">
+</p>
+
+---
+
+## Why AJ139 Driver?
+
+The AJ139 V2 MC is a great mouse, but its configuration software only runs on Windows. On a Mac you are stuck with whatever DPI was set at the factory and no way to see the battery level.
+
+AJ139 Driver talks to the mouse directly over its own HID protocol, which was worked out from the official Windows software and tested on a real device.
+
+- **Free and open source.** MIT licensed. No ads, no tracking, no accounts.
+- **No drivers to install.** No kernel extensions and no system extensions. It uses the standard macOS HID APIs.
+- **Native and small.** Written in Swift and SwiftUI. About 1 MB.
+- **Settings live on the mouse.** Everything you change is stored in the mouse itself, so it keeps working on other computers too.
 
 ## Features
 
-- Battery level and charging state
-- Six DPI stages, 50 to 26000 DPI
-- Pick the active DPI stage
-- Settings are saved on the mouse, so they also work on other computers
-- English and Turkish interface
-- No drivers or kernel extensions, it talks to the mouse over standard HID
+### 🔋 Battery
+- Battery level as a percentage with a ring indicator.
+- Shows when the mouse is on USB power.
+- Refreshes automatically every 15, 30, 60 or 300 seconds.
 
-## Install
+### 🎯 DPI
+- Six DPI stages, each adjustable from 50 to 26000 DPI with a slider or by typing the value.
+- Pick which stage is active.
+- The DPI button on the mouse cycles through the stages you set.
+- One click to go back to the default stages.
 
-1. Download `AJ139-Driver.zip` from the [latest release](https://github.com/werquess/ajazz-aj139-macos/releases/latest).
-2. Unzip it and move **AJ139 Driver.app** to your Applications folder.
-3. The app is not notarized. The first time, right click it and choose **Open**, or run:
+### 🌍 Languages
+- English and Türkçe, or follow the system language.
 
-   ```bash
-   xattr -dr com.apple.quarantine "/Applications/AJ139 Driver.app"
-   ```
+## Installation
 
-Requires macOS 14 or later. Tested on Apple silicon with the mouse connected over USB.
+1. **[Download AJ139-Driver.dmg](https://github.com/werquess/ajazz-aj139-macos/releases/latest/download/AJ139-Driver.dmg)**
+2. Open the disk image and drag **AJ139 Driver** into **Applications**.
+3. Connect the mouse with the USB cable or the 2.4 GHz receiver and open AJ139 Driver.
 
-## Build from source
+Prefer a plain archive? Use **[AJ139-Driver.zip](https://github.com/werquess/ajazz-aj139-macos/releases/latest/download/AJ139-Driver.zip)** instead.
+
+> [!NOTE]
+> AJ139 Driver is not notarized by Apple yet. On first launch macOS may say it can't verify the developer.
+> Right-click AJ139 Driver in Applications and choose **Open**, or go to **System Settings › Privacy & Security** and click **Open Anyway**. You only need to do this once.
+
+### Requirements
+- macOS 14 Sonoma or later
+- A Mac with Apple Silicon
+- AJAZZ AJ139 V2 MC connected over USB or the 2.4 GHz receiver
+
+### Supported devices
+
+| Device | Connection | Status |
+| --- | --- | --- |
+| AJAZZ AJ139 V2 MC | USB cable | Tested |
+| AJAZZ AJ139 V2 MC | 2.4 GHz receiver | Should work, not tested yet |
+| AJAZZ AJ139 V2 MC | Bluetooth | Not supported |
+
+The mouse accepts DPI indicator colors but does not store them, so there is no color setting.
+
+## Privacy
+
+AJ139 Driver has no analytics, no telemetry and makes no network connections. It only talks to the mouse.
+
+## Roadmap
+
+- [ ] Polling rate setting
+- [ ] Button remapping
+- [ ] Menu bar mode with battery level
+- [ ] Support for other AJAZZ mice that use the same chip
+
+Have an idea or another AJAZZ mouse you want supported? [Open an issue](https://github.com/werquess/ajazz-aj139-macos/issues).
+
+## Building from source
 
 ```bash
 git clone https://github.com/werquess/ajazz-aj139-macos.git
 cd ajazz-aj139-macos
-./build.sh
+scripts/build_app.sh
 ```
 
-The app ends up in `build/`. Only the Xcode command line tools are needed.
+This builds `build/AJ139 Driver.app`. Only the Xcode Command Line Tools are needed.
 
-## Notes
+The protocol is documented in [PROTOCOL.md](PROTOCOL.md).
 
-- The protocol is documented in [PROTOCOL.md](PROTOCOL.md).
-- The mouse accepts DPI indicator colors but does not store them, so there is no color setting.
-- Bluetooth mode has not been tested.
+### Publishing a release
 
-## Support
+```bash
+scripts/release.sh 1.1.0
+gh release create v1.1.0 dist/AJ139-Driver.dmg dist/AJ139-Driver.zip --title "AJ139 Driver 1.1.0" --notes-file CHANGELOG.md
+```
 
-If this saved you from booting Windows, you can [buy me a coffee](https://buymeacoffee.com/werquess).
+Both files need to be attached to every release so the download buttons above keep working.
+
+## Support AJ139 Driver
+
+AJ139 Driver is free and always will be. If it saved you from booting Windows, you can support its development:
+
+<a href="https://buymeacoffee.com/werquess"><img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-werquess-ffdd00?style=for-the-badge&logo=buymeacoffee&logoColor=black" alt="Buy me a coffee"></a>
+
+Starring the repo and telling a friend helps a lot too. ⭐
+
+## Contributing
+
+Bug reports, translations and pull requests are welcome.
 
 ## License
 
-[MIT](LICENSE)
+AJ139 Driver is released under the [MIT License](LICENSE).
+
+AJAZZ is a trademark of its respective owner. This project is not affiliated with or endorsed by AJAZZ.
