@@ -39,6 +39,11 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 </plist>
 PLIST
 
-codesign --force --sign - "$APP" >/dev/null 2>&1 || true
+IDENTITY="${SIGN_IDENTITY:-AJ139 Driver Signing}"
+if security find-identity -p codesigning | grep -q "\"$IDENTITY\""; then
+  codesign --force --timestamp=none --sign "$IDENTITY" "$APP"
+else
+  codesign --force --sign - "$APP" >/dev/null 2>&1 || true
+fi
 rm -rf "$TMP"
 echo "$PWD/$APP"

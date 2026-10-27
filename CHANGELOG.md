@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+
+- Signed with a stable certificate so the Accessibility permission is kept across updates
+- Clearer hint when the Accessibility permission is stale
+
 ## 1.1.0
 
 - Assign actions, keyboard shortcuts or macros to the middle and side buttons

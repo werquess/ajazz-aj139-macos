@@ -69,7 +69,7 @@ AJ139 Driver talks to the mouse directly over its own HID protocol, which was wo
 - Switch DPI stages and toggle scrolling features from the menu.
 - Keeps running in the background when the window is closed. The Dock icon is optional and it can open at login.
 
-Buttons, macros and scrolling need Accessibility access. The app shows a button that opens the right page in System Settings. After updating the app you may need to turn the permission off and on again.
+Buttons, macros and scrolling need Accessibility access. The app shows a button that opens the right page in System Settings. Starting with 1.1.1 the permission is kept across updates. If you are coming from an older version, remove AJ139 Driver from the Accessibility list with − once and add it again.
 
 ### 🌍 Languages
 - English and Türkçe, or follow the system language.
