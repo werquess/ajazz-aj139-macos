@@ -10,18 +10,6 @@ enum Tab: String {
     case mouse, buttons, scroll
 }
 
-func batteryIcon(_ b: Battery?) -> String {
-    guard let b else { return "computermouse" }
-    if b.charging { return "battery.100.bolt" }
-    switch b.percent {
-    case 88...: return "battery.100"
-    case 63..<88: return "battery.75"
-    case 38..<63: return "battery.50"
-    case 13..<38: return "battery.25"
-    default: return "battery.0"
-    }
-}
-
 struct Card<Content: View>: View {
     let title: String
     let icon: String
@@ -301,7 +289,7 @@ struct MenuBarLabel: View {
     var body: some View {
         if percent, let b = m.battery {
             HStack(spacing: 3) {
-                Image(systemName: batteryIcon(b))
+                Image(systemName: "computermouse.fill")
                 Text("\(b.percent)%")
             }
         } else {
@@ -328,7 +316,8 @@ struct MenuBarView: View {
                 }
                 Spacer()
                 if let b = m.battery {
-                    Label("\(b.percent)%", systemImage: batteryIcon(b)).font(.callout.monospacedDigit())
+                    Label("\(b.percent)%", systemImage: b.charging ? "bolt.fill" : "computermouse")
+                        .font(.callout.monospacedDigit())
                 }
             }
 
