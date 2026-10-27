@@ -8,6 +8,7 @@ Notes on the vendor protocol used by the mouse. Everything here was checked agai
 |------|-----|-----|
 | USB cable | `A8A4` | `2255` |
 | 2.4 GHz receiver | `A8A5` | `2255` |
+| Bluetooth LE | `2717` | `32B0` |
 
 The configuration interface is the HID collection with usage page `0xFF01`, usage `0x10`.
 Reports have no report ID and are 64 bytes in both directions.
@@ -54,3 +55,12 @@ Offsets are into the 64 byte `0E` response. To write, take the block, set bytes 
 | 13 | 12 | Six DPI values, `uint16` little endian, 50 to 26000 |
 | 25 | 18 | Six RGB triplets for the DPI indicator. Ignored by this model, always read back as zero. |
 | 48 | 1 | Scroll flag |
+
+## Bluetooth
+
+Over Bluetooth LE the mouse exposes a HID descriptor with only mouse, consumer and keyboard reports.
+There is no vendor collection, and the GATT database contains no Battery Service.
+
+The only other service is `02F00000-0000-0000-0000-00000000FE00` with characteristics `FF00` to `FF03`.
+This is the Freqchip OTA firmware update service, not a configuration channel. It answers configuration
+packets with `02 55 00 00`. Do not write to it.

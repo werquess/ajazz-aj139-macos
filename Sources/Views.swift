@@ -91,6 +91,8 @@ struct ContentView: View {
     @AppStorage("language") private var language = Language.system
     @State private var showSettings = false
 
+    private var onBluetooth: Bool { !m.connected && m.status == .bluetooth }
+
     var body: some View {
         let t = Strings(lang: language)
         VStack(spacing: 14) {
@@ -99,14 +101,23 @@ struct ContentView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("AJ139 V2 MC").font(.title3.weight(.semibold))
                     HStack(spacing: 6) {
-                        Circle().fill(m.connected ? .green : .red).frame(width: 8, height: 8)
-                        Text(m.connected ? t[.connected] : t[.disconnected])
+                        Circle().fill(m.connected ? .green : onBluetooth ? .blue : .red).frame(width: 8, height: 8)
+                        Text(m.connected ? t[.connected] : onBluetooth ? t[.bluetooth] : t[.disconnected])
                             .font(.caption).foregroundStyle(.secondary)
                     }
                 }
                 Spacer()
                 Button { m.refresh() } label: { Image(systemName: "arrow.clockwise") }.help(t[.refresh])
                 Button { showSettings = true } label: { Image(systemName: "gearshape") }.help(t[.settings])
+            }
+
+            if onBluetooth {
+                Label(t[.bluetoothDetail], systemImage: "info.circle.fill")
+                    .font(.callout)
+                    .foregroundStyle(.primary)
+                    .padding(14)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(RoundedRectangle(cornerRadius: 14).fill(Color.blue.opacity(0.15)))
             }
 
             Card(title: t[.battery], icon: "battery.100") { BatteryView(battery: m.battery, t: t) }

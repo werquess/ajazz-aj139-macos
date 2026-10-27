@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum Status {
-    case searching, notFound, connected, readFailed, writeFailed, verifyFailed, saved
+    case searching, notFound, bluetooth, connected, readFailed, writeFailed, verifyFailed, saved
 }
 
 @MainActor
@@ -32,7 +32,7 @@ final class MouseModel: ObservableObject {
         link.connect()
         connected = link.isConnected
         guard connected else {
-            status = .notFound
+            status = HIDLink.bluetoothDevicePresent() ? .bluetooth : .notFound
             battery = nil
             return
         }

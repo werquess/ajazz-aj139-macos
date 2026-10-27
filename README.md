@@ -59,7 +59,7 @@ AJ139 Driver talks to the mouse directly over its own HID protocol, which was wo
 
 1. **[Download AJ139-Driver.dmg](https://github.com/werquess/ajazz-aj139-macos/releases/latest/download/AJ139-Driver.dmg)**
 2. Open the disk image and drag **AJ139 Driver** into **Applications**.
-3. Connect the mouse with the USB cable or the 2.4 GHz receiver and open AJ139 Driver.
+3. Connect the mouse with the USB cable or the 2.4 GHz receiver and open AJ139 Driver. Bluetooth is not enough, see [Supported devices](#supported-devices).
 
 Prefer a plain archive? Use **[AJ139-Driver.zip](https://github.com/werquess/ajazz-aj139-macos/releases/latest/download/AJ139-Driver.zip)** instead.
 
@@ -78,7 +78,9 @@ Prefer a plain archive? Use **[AJ139-Driver.zip](https://github.com/werquess/aja
 | --- | --- | --- |
 | AJAZZ AJ139 V2 MC | USB cable | Tested |
 | AJAZZ AJ139 V2 MC | 2.4 GHz receiver | Should work, not tested yet |
-| AJAZZ AJ139 V2 MC | Bluetooth | Not supported |
+| AJAZZ AJ139 V2 MC | Bluetooth | Detected, but battery and DPI are not available |
+
+Over Bluetooth the mouse only exposes the standard mouse and keyboard reports. It does not share its battery level or settings, not even with macOS itself. The app recognizes a Bluetooth connection and tells you to plug in the cable or receiver to change DPI.
 
 The mouse accepts DPI indicator colors but does not store them, so there is no color setting.
 

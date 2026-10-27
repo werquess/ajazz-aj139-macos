@@ -14,7 +14,7 @@ enum Language: String, CaseIterable, Identifiable {
 enum S: CaseIterable {
     case connected, disconnected, refresh, battery, unreadable, usbConnected, onBattery
     case dpi, makeActive, hint, defaults, apply
-    case searching, notFound, readFailed, writeFailed, verifyFailed, saved
+    case searching, notFound, bluetooth, bluetoothShort, bluetoothDetail, readFailed, writeFailed, verifyFailed, saved
     case settings, language, systemLanguage, batteryRefresh, seconds, support, supportText
     case buyCoffee, about, version, source, done
 }
@@ -31,6 +31,7 @@ struct Strings {
         switch s {
         case .searching: return self[.searching]
         case .notFound: return self[.notFound]
+        case .bluetooth: return self[.bluetooth]
         case .connected: return self[.connected]
         case .readFailed: return self[.readFailed]
         case .writeFailed: return self[.writeFailed]
@@ -54,6 +55,10 @@ struct Strings {
         .apply: ("Apply", "Uygula"),
         .searching: ("Looking for the mouse…", "Mouse aranıyor…"),
         .notFound: ("Mouse not found. Check the cable or receiver.", "Mouse bulunamadı. Kabloyu veya alıcıyı kontrol et."),
+        .bluetooth: ("Connected over Bluetooth", "Bluetooth ile bağlı"),
+        .bluetoothShort: ("Bluetooth", "Bluetooth"),
+        .bluetoothDetail: ("Over Bluetooth the mouse does not share its battery level or settings. Connect the USB cable or the 2.4 GHz receiver to change DPI. Settings are stored on the mouse itself.",
+                           "Mouse, Bluetooth'ta pil seviyesini ve ayarlarını paylaşmıyor. DPI'ı değiştirmek için USB kabloyu veya 2.4 GHz alıcıyı tak. Ayarlar mouse'un kendisinde saklanır."),
         .readFailed: ("Could not read settings", "Ayarlar okunamadı"),
         .writeFailed: ("Write failed", "Yazma başarısız"),
         .verifyFailed: ("Could not verify", "Doğrulanamadı"),

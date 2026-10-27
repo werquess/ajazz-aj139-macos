@@ -9,6 +9,15 @@ final class HIDLink {
 
     var isConnected: Bool { device != nil }
 
+    static func bluetoothDevicePresent() -> Bool {
+        let none = IOOptionBits(kIOHIDOptionsTypeNone)
+        let mgr = IOHIDManagerCreate(kCFAllocatorDefault, none)
+        IOHIDManagerSetDeviceMatching(mgr, [kIOHIDVendorIDKey: Proto.bluetoothVendorID,
+                                            kIOHIDProductIDKey: Proto.bluetoothProductID] as CFDictionary)
+        let set = IOHIDManagerCopyDevices(mgr) as? Set<IOHIDDevice>
+        return !(set?.isEmpty ?? true)
+    }
+
     func connect() {
         if device != nil { return }
         let none = IOOptionBits(kIOHIDOptionsTypeNone)

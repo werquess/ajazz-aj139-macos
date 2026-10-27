@@ -3,6 +3,8 @@ import Foundation
 enum Proto {
     static let vendorIDs = [0xA8A4, 0xA8A5]
     static let productID = 0x2255
+    static let bluetoothVendorID = 0x2717
+    static let bluetoothProductID = 0x32B0
     static let usagePage = 0xFF01
     static let reportSize = 64
     static let dpiMin = 50, dpiMax = 26000, stageCount = 6
